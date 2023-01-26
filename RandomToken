@@ -1,0 +1,14 @@
+on("ready", function() {
+    on("chat:message", function(msg) {
+        if(msg.type == "api" && msg.content.indexOf("!randomtoken") !== -1) {
+            var selectedTokens = msg.selected;
+            if(selectedTokens.length === 0) {
+                sendChat("API", "No tokens were selected. Please select one or more tokens and try again.");
+            } else {
+                var randomToken = selectedTokens[Math.floor(Math.random() * selectedTokens.length)];
+                var tokenName = getObj("graphic", randomToken._id).get("name");
+                sendChat("API", "The RNG Gods choose: " + tokenName);
+            }
+        }
+    });
+});
